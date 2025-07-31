@@ -8,17 +8,21 @@
         async function main() {
             let teavm = await TeaVM.wasmGC.load("teavm/classes.wasm", {
                 stackDeobfuscator: {
-                    // set to true during development phase, as well as `debugInformationGenerated`
-                    // option in pom.xml to get clear stack traces. Don't forget
-                    // to disable for production.
                     enabled: false
                 }
             });
             teavm.exports.main([]);
+            
+            document.getElementById('helloBtn').onclick = function() {
+              const text = document.getElementById('inputText').value;
+              window.javaCallbacks.sayHello(text);
+            };
         }
     </script>
   </head>
   <body onload="main()">
-  <!-- TODO: add HTML content -->
+    <input type="text" id="inputText" placeholder="Enter your name">
+    <button id="helloBtn">Say Hello</button>
+    <div id="outputDiv"></div>
   </body>
 </html>
