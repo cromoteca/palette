@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main page</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <script type="text/javascript" charset="utf-8" src="teavm/classes.wasm-runtime.js"></script>
+    <script src="teavm/classes.wasm-runtime.js"></script>
     <script>
         async function main() {
             let teavm = await TeaVM.wasmGC.load("teavm/classes.wasm", {
@@ -12,17 +13,10 @@
                 }
             });
             teavm.exports.main([]);
-            
-            document.getElementById('helloBtn').onclick = function() {
-              const text = document.getElementById('inputText').value;
-              window.javaCallbacks.sayHello(text);
-            };
         }
     </script>
   </head>
   <body onload="main()">
-    <input type="text" id="inputText" placeholder="Enter your name">
-    <button id="helloBtn">Say Hello</button>
-    <div id="outputDiv"></div>
+    <!-- Empty body - all content will be created by Java/WASM -->
   </body>
 </html>
