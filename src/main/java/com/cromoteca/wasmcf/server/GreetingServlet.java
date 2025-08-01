@@ -1,5 +1,6 @@
 package com.cromoteca.wasmcf.server;
 
+import com.cromoteca.wasmcf.shared.GreetingGenerator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,13 +23,7 @@ public class GreetingServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         
         try (var out = response.getWriter()) {
-            out.print(generateGreeting(name));
+            out.print(GreetingGenerator.generateGreeting(name));
         }
-    }
-    
-    private String generateGreeting(String name) {
-        var osName = System.getProperty("os.name");
-        var nameToUse = (name == null || name.trim().isEmpty()) ? "stranger" : name;
-        return "Hello " + nameToUse + " from " + osName;
     }
 }

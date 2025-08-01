@@ -1,5 +1,6 @@
 package com.cromoteca.wasmcf.client.views;
 
+import com.cromoteca.wasmcf.shared.GreetingGenerator;
 import com.cromoteca.wasmcf.client.components.Div;
 import com.cromoteca.wasmcf.client.components.TextField;
 import com.cromoteca.wasmcf.client.components.Button;
@@ -26,9 +27,7 @@ public class MainView extends Div {
         
         localButton.addClickListener(event -> {
             var name = textField.getValue();
-            var osName = System.getProperty("os.name");
-            var nameToUse = name.isEmpty() ? "stranger" : name;
-            Notification.show("Hello " + nameToUse + " from " + osName);
+            Notification.show(GreetingGenerator.generateGreeting(name));
         });
     }
 }
