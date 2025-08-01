@@ -3,6 +3,7 @@ package com.cromoteca.wasmcf;
 import com.cromoteca.wasmcf.components.Div;
 import com.cromoteca.wasmcf.components.TextField;
 import com.cromoteca.wasmcf.components.Button;
+import com.cromoteca.wasmcf.components.Notification;
 
 public class MainView extends Div {
     public MainView() {
@@ -14,14 +15,13 @@ public class MainView extends Div {
         textField.setPlaceholder("Enter your name here");
         
         var button = new Button("Say Hello");
-        var output = new Div();
 
-        add(osDiv, textField, button, output);
+        add(osDiv, textField, button);
 
         button.addClickListener(event -> {
             String name = textField.getValue();
             String greeting = name.isEmpty() ? "Hello stranger" : "Hello " + name;
-            output.setText(greeting);
+            Notification.show(greeting);
         });
     }
 }

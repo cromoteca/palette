@@ -14,7 +14,8 @@
   "description": "",
   "dependencies": {
     "@vaadin/button": "^24.8.4",
-    "@vaadin/text-field": "^24.8.4"
+    "@vaadin/text-field": "^24.8.4",
+    "@vaadin/notification": "^24.8.4"
   },
   "devDependencies": {
     "vite": "^5.4.8"
