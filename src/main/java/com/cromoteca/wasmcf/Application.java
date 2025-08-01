@@ -1,8 +1,9 @@
 package com.cromoteca.wasmcf;
 
 import org.teavm.jso.dom.html.HTMLDocument;
+import com.cromoteca.wasmcf.client.views.MainView;
 
-public class Client {
+public class Application {
     public static void main(String[] args) {
         createUserInterface();
     }

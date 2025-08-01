@@ -1,9 +1,10 @@
-package com.cromoteca.wasmcf;
+package com.cromoteca.wasmcf.client.views;
 
-import com.cromoteca.wasmcf.components.Div;
-import com.cromoteca.wasmcf.components.TextField;
-import com.cromoteca.wasmcf.components.Button;
-import com.cromoteca.wasmcf.components.Notification;
+import com.cromoteca.wasmcf.client.components.Div;
+import com.cromoteca.wasmcf.client.components.TextField;
+import com.cromoteca.wasmcf.client.components.Button;
+import com.cromoteca.wasmcf.client.components.Notification;
+import com.cromoteca.wasmcf.client.services.GreetingService;
 
 public class MainView extends Div {
     private final GreetingService greetingService = new GreetingService();
@@ -18,14 +19,11 @@ public class MainView extends Div {
 
         add(textField, button, localButton);
 
-        // Server-side greeting
         button.addClickListener(event -> {
-            var name = textField.getValue();
-            var greeting = greetingService.generateGreeting(name);
+            var greeting = greetingService.generateGreeting(textField.getValue());
             Notification.show(greeting);
         });
         
-        // Local greeting (original functionality)
         localButton.addClickListener(event -> {
             var name = textField.getValue();
             var osName = System.getProperty("os.name");

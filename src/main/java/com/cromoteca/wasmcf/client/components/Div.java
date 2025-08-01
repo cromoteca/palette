@@ -1,4 +1,4 @@
-package com.cromoteca.wasmcf.components;
+package com.cromoteca.wasmcf.client.components;
 
 public class Div extends Component {
     

@@ -1,6 +1,4 @@
-package com.cromoteca.wasmcf;
-
-import com.cromoteca.wasmcf.services.HttpService;
+package com.cromoteca.wasmcf.client.services;
 
 public class GreetingService {
 

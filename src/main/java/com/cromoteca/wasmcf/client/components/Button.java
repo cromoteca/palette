@@ -1,4 +1,4 @@
-package com.cromoteca.wasmcf.components;
+package com.cromoteca.wasmcf.client.components;
 
 import java.util.ArrayList;
 import java.util.List;

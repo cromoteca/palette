@@ -83,7 +83,7 @@
               <targetType>WEBASSEMBLY_GC</targetType>
 
               <!-- Main class, containing static void main(String[]) -->
-              <mainClass>com.cromoteca.wasmcf.Client</mainClass>
+              <mainClass>com.cromoteca.wasmcf.Application</mainClass>
 
               <!-- Optimization level. Valid values are: SIMPLE, ADVANCED, FULL -->
               <optimizationLevel>ADVANCED</optimizationLevel>

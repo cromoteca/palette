@@ -21,12 +21,8 @@ public class GreetingServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
         
-        // Generate server-side greeting
-        var greeting = generateGreeting(name);
-        
-        // Return plain text response
         try (var out = response.getWriter()) {
-            out.print(greeting);
+            out.print(generateGreeting(name));
         }
     }
     
