@@ -1,0 +1,6 @@
+// Import Vaadin Lit Components
+import '@vaadin/button';
+import '@vaadin/text-field';
+
+// Make components available globally for TeaVM/WASM to use
+console.log('Vaadin components loaded');

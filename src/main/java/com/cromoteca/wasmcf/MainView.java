@@ -10,6 +10,9 @@ public class MainView extends Div {
         osDiv.setText("System.getProperty(\"os.name\") = " + System.getProperty("os.name"));
 
         var textField = new TextField();
+        textField.setLabel("Your name");
+        textField.setPlaceholder("Enter your name here");
+        
         var button = new Button("Say Hello");
         var output = new Div();
 

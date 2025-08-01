@@ -7,7 +7,7 @@ public class Button extends Component {
     private final List<ClickListener> clickListeners = new ArrayList<>();
     
     public Button(String text) {
-        super("button");
+        super("vaadin-button");
         getElement().setTextContent(text);
         setupClickHandler();
     }
