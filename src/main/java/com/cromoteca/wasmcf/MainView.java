@@ -6,11 +6,14 @@ import com.cromoteca.wasmcf.components.Button;
 
 public class MainView extends Div {
     public MainView() {
+        var osDiv = new Div();
+        osDiv.setText("System.getProperty(\"os.name\") = " + System.getProperty("os.name"));
+
         var textField = new TextField();
         var button = new Button("Say Hello");
         var output = new Div();
 
-        add(textField, button, output);
+        add(osDiv, textField, button, output);
 
         button.addClickListener(event -> {
             String name = textField.getValue();
