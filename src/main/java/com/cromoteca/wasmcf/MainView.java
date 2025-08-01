@@ -29,8 +29,8 @@ public class MainView extends Div {
         localButton.addClickListener(event -> {
             var name = textField.getValue();
             var osName = System.getProperty("os.name");
-            var greeting = name.isEmpty() ? "Hello stranger" : "Hello " + name;
-            Notification.show(greeting + " from " + osName + " (local)");
+            var nameToUse = name.isEmpty() ? "stranger" : name;
+            Notification.show("Hello " + nameToUse + " from " + osName);
         });
     }
 }

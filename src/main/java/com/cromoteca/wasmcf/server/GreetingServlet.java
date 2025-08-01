@@ -16,55 +16,23 @@ public class GreetingServlet extends HttpServlet {
         
         var name = request.getParameter("name");
         
-        // Set response headers for JSON and CORS
-        response.setContentType("application/json");
+        // Set response headers for plain text and CORS
+        response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         
         // Generate server-side greeting
         var greeting = generateGreeting(name);
         
-        // Return JSON response
+        // Return plain text response
         try (var out = response.getWriter()) {
-            out.print("{\"greeting\": \"" + escapeJson(greeting) + "\", \"timestamp\": " + System.currentTimeMillis() + "}");
+            out.print(greeting);
         }
-    }
-    
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        // Handle POST requests (for more complex data)
-        doGet(request, response);
-    }
-    
-    @Override
-    protected void doOptions(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        // Handle CORS preflight requests
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
     
     private String generateGreeting(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            return "Hello stranger! Server time: " + new java.util.Date();
-        }
-        
-        // Server-side logic - you can add database calls, business logic, etc.
-        var greetings = new String[]{
-            "Hello", "Hi", "Greetings", "Welcome", "Good to see you"
-        };
-        var randomGreeting = greetings[(int) (Math.random() * greetings.length)];
-        
-        return randomGreeting + " " + name + "! (from server at " + new java.util.Date() + ")";
-    }
-    
-    private String escapeJson(String str) {
-        if (str == null) return "";
-        return str.replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
+        var osName = System.getProperty("os.name");
+        var nameToUse = (name == null || name.trim().isEmpty()) ? "stranger" : name;
+        return "Hello " + nameToUse + " from " + osName;
     }
 }

@@ -1,14 +1,12 @@
 package com.cromoteca.wasmcf;
 
 import com.cromoteca.wasmcf.services.HttpService;
-import com.cromoteca.wasmcf.services.JsonHelper;
 
 public class GreetingService {
 
     public String generateGreeting(String name) {
         var url = "/api/greeting?name=" + encodeURIComponent(name);
-        var response = HttpService.get(url);
-        return JsonHelper.getString(response, "greeting");
+        return HttpService.get(url);
     }
     
     private String encodeURIComponent(String str) {
