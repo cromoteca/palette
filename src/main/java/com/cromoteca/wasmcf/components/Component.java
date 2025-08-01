@@ -10,7 +10,7 @@ public abstract class Component {
     private final List<Component> children = new ArrayList<>();
     
     protected Component(String tagName) {
-        HTMLDocument document = HTMLDocument.current();
+        var document = HTMLDocument.current();
         this.element = document.createElement(tagName);
     }
     

@@ -11,7 +11,7 @@ public class Div extends Component {
     }
     
     public void add(Component... components) {
-        for (Component component : components) {
+        for (var component : components) {
             getElement().appendChild(component.getElement());
             addChild(component);
         }

@@ -22,8 +22,8 @@ public class Button extends Component {
     
     private void setupClickHandler() {
         getElement().addEventListener("click", evt -> {
-            ClickEvent event = new ClickEvent(this);
-            for (ClickListener listener : clickListeners) {
+            var event = new ClickEvent(this);
+            for (var listener : clickListeners) {
                 listener.clicked(event);
             }
         });

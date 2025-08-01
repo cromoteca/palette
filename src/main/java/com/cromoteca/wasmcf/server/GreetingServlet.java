@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/api/greeting")
 public class GreetingServlet extends HttpServlet {
@@ -15,7 +14,7 @@ public class GreetingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        String name = request.getParameter("name");
+        var name = request.getParameter("name");
         
         // Set response headers for JSON and CORS
         response.setContentType("application/json");
@@ -25,12 +24,12 @@ public class GreetingServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         
         // Generate server-side greeting
-        String greeting = generateGreeting(name);
+        var greeting = generateGreeting(name);
         
         // Return JSON response
-        PrintWriter out = response.getWriter();
-        out.print("{\"greeting\": \"" + escapeJson(greeting) + "\", \"timestamp\": " + System.currentTimeMillis() + "}");
-        out.flush();
+        try (var out = response.getWriter()) {
+            out.print("{\"greeting\": \"" + escapeJson(greeting) + "\", \"timestamp\": " + System.currentTimeMillis() + "}");
+        }
     }
     
     @Override
@@ -56,10 +55,10 @@ public class GreetingServlet extends HttpServlet {
         }
         
         // Server-side logic - you can add database calls, business logic, etc.
-        String[] greetings = {
+        var greetings = new String[]{
             "Hello", "Hi", "Greetings", "Welcome", "Good to see you"
         };
-        String randomGreeting = greetings[(int) (Math.random() * greetings.length)];
+        var randomGreeting = greetings[(int) (Math.random() * greetings.length)];
         
         return randomGreeting + " " + name + "! (from server at " + new java.util.Date() + ")";
     }
