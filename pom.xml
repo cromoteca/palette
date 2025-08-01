@@ -157,10 +157,21 @@
               <arguments>install</arguments>
             </configuration>
           </execution>
+          <!-- Run Vite build -->
+          <execution>
+            <id>npm run build</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
 
-      <!-- Maven Clean Plugin configuration to remove node_modules -->
+      <!-- Maven Clean Plugin configuration to remove node_modules and dist -->
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
         <version>3.4.0</version>
@@ -168,6 +179,10 @@
           <filesets>
             <fileset>
               <directory>src/main/webapp/node_modules</directory>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+            <fileset>
+              <directory>src/main/webapp/dist</directory>
               <followSymlinks>false</followSymlinks>
             </fileset>
           </filesets>

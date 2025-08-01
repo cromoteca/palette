@@ -1,11 +1,12 @@
 {
   "name": "webapp",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "echo \"Frontend dependencies installed. Use Maven for full build.\"",
-    "clean": "rm -rf node_modules"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "clean": "rm -rf node_modules dist"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +15,8 @@
   "dependencies": {
     "@vaadin/button": "^24.8.4",
     "@vaadin/text-field": "^24.8.4"
+  },
+  "devDependencies": {
+    "vite": "^5.4.8"
   }
 }
