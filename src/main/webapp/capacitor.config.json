@@ -1,0 +1,8 @@
+{
+  "appId": "com.cromoteca.wasmcf",
+  "appName": "WasmCF",
+  "webDir": "../../../target/generated/wasm",
+  "server": {
+    "androidScheme": "https"
+  }
+}

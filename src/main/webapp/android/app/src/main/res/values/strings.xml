@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">WasmCF</string>
+    <string name="title_activity_main">WasmCF</string>
+    <string name="package_name">com.cromoteca.wasmcf</string>
+    <string name="custom_url_scheme">com.cromoteca.wasmcf</string>
+</resources>
