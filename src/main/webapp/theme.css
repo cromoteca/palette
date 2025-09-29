@@ -74,3 +74,21 @@ body {
   outline-offset: 2px;
   transition: outline-color .15s ease;
 }
+
+/* Force Shoelace toast notifications to appear at bottom-right */
+/* Shoelace creates a stack container with class .sl-toast-stack and a
+   placement modifier class (e.g. --top-right). We override positioning so
+   whatever the default is, it ends up bottom-right. */
+.sl-toast-stack {
+  top: auto !important;
+  bottom: 1rem !important;
+  right: 1rem !important;
+  left: auto !important;
+  align-items: flex-end !important; /* ensure items align to right */
+  justify-content: flex-end; /* in case of column direction, push upward */
+  pointer-events: none; /* allow clicks through gaps; alerts themselves handle events */
+}
+
+.sl-toast-stack sl-alert::part(base) {
+  pointer-events: auto; /* restore interaction for the alert itself */
+}
