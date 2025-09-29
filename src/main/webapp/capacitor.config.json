@@ -1,6 +1,6 @@
 {
-  "appId": "com.cromoteca.wasmcf",
-  "appName": "WasmCF",
+  "appId": "com.cromoteca.palette",
+  "appName": "Palette",
   "webDir": "../../../target/generated/wasm",
   "server": {
     "androidScheme": "https"

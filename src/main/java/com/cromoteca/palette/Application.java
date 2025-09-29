@@ -1,7 +1,7 @@
-package com.cromoteca.wasmcf;
+package com.cromoteca.palette;
 
 import org.teavm.jso.dom.html.HTMLDocument;
-import com.cromoteca.wasmcf.client.views.MainView;
+import com.cromoteca.palette.client.views.MainView;
 
 public class Application {
     public static void main(String[] args) {

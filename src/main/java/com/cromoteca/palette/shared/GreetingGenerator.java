@@ -1,4 +1,4 @@
-package com.cromoteca.wasmcf.shared;
+package com.cromoteca.palette.shared;
 
 public class GreetingGenerator {
 

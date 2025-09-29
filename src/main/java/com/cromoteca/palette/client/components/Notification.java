@@ -1,4 +1,4 @@
-package com.cromoteca.wasmcf.client.components;
+package com.cromoteca.palette.client.components;
 
 import org.teavm.jso.JSBody;
 

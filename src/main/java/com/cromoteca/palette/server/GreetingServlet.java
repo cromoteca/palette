@@ -1,6 +1,6 @@
-package com.cromoteca.wasmcf.server;
+package com.cromoteca.palette.server;
 
-import com.cromoteca.wasmcf.shared.GreetingGenerator;
+import com.cromoteca.palette.shared.GreetingGenerator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

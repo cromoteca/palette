@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.cromoteca.wasmcf"
+    namespace "com.cromoteca.palette"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.cromoteca.wasmcf"
+        applicationId "com.cromoteca.palette"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

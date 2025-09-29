@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 WasmCF Mobile Deployment Verification"
+echo "🚀 Palette Mobile Deployment Verification"
 echo "========================================"
 
 # Check if we're in the right directory
@@ -44,7 +44,7 @@ else
 fi
 
 echo ""
-echo "🎉 Your WasmCF app is ready for Android deployment!"
+echo "🎉 Your Palette app is ready for Android deployment!"
 echo ""
 echo "Next steps:"
 echo "1. Install Android Studio"

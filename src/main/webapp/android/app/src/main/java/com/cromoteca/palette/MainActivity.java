@@ -1,4 +1,4 @@
-package com.cromoteca.wasmcf;
+package com.cromoteca.palette;
 
 import com.getcapacitor.BridgeActivity;
 

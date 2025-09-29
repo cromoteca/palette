@@ -1,4 +1,4 @@
-# WasmCF Mobile Setup with Capacitor
+# Palette Mobile Setup with Capacitor
 
 Your Wasm application is now ready for mobile deployment! 🚀
 
