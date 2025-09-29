@@ -1,6 +1,6 @@
-# TeaVM WebAssembly + Vaadin Lit Components
+# TeaVM WebAssembly + Web Components (Shoelace)
 
-This project demonstrates how to integrate Vaadin Lit Components with TeaVM WebAssembly to mimic Flow in the browser.
+This project demonstrates wrapping standard Web Components (currently [Shoelace](https://shoelace.style/) button, input, alert) from Java using TeaVM compiled to WebAssembly. The goal is to show a serverless, component-oriented programming model fully client‑side.
 
 ## Quick Start
 
@@ -25,8 +25,20 @@ cd src/main/webapp
 npm run cap:android
 ```
 
-### Features on Mobile
-- ✅ Full UI functionality (TextField, Buttons, Notifications)
-- ✅ Local Java logic compiled to WASM  
-- ✅ Vaadin web components
+### Features
+- ✅ Full UI functionality (Input, Buttons, Toast notifications via `sl-alert`)
+- ✅ Local Java logic compiled to WASM
+- ✅ Themeable design (light/dark auto, `theme.css` with CSS custom property overrides)
+- ✅ Mobile packaging via Capacitor
 - ❌ Server API calls (expected limitation)
+
+### Theming
+Shoelace ships with light and dark themes. We import the light theme plus a conditional dark theme in `shoelace-components.js`, and override design tokens in `theme.css` (e.g. `--sl-color-primary-500`, radii, shadows). You can quickly adjust brand colors by editing those variables.
+
+To force dark mode manually:
+
+```js
+document.documentElement.classList.add('sl-theme-dark');
+```
+
+To add more components, import their modules in `shoelace-components.js` and create a Java wrapper extending `Component` with the appropriate tag name.

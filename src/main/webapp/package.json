@@ -19,9 +19,7 @@
     "@capacitor/android": "^7.4.2",
     "@capacitor/cli": "^7.4.2",
     "@capacitor/core": "^7.4.2",
-    "@vaadin/button": "^24.8.4",
-    "@vaadin/notification": "^24.8.4",
-    "@vaadin/text-field": "^24.8.4"
+    "@shoelace-style/shoelace": "^2.16.0"
   },
   "devDependencies": {
     "vite": "^5.4.8"

@@ -5,7 +5,7 @@ import org.teavm.jso.JSBody;
 public class TextField extends Component {
     
     public TextField() {
-        super("vaadin-text-field");
+        super("sl-input");
     }
     
     public String getValue() {

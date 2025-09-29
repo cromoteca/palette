@@ -11,15 +11,22 @@ public class Notification {
      * @param text the text to display in the notification
      */
     public static void show(String text) {
-        showNotification(text);
+        show(text, "primary", 5000);
     }
-    
-    @JSBody(params = {"text"}, script = 
-        "var notification = document.createElement('vaadin-notification');" +
-        "notification.renderer = function(root) { root.textContent = text; };" +
-        "notification.duration = 5000;" +
-        "notification.position = 'bottom-start';" +
-        "notification.opened = true;" +
-        "document.body.appendChild(notification);")
-    private static native void showNotification(String text);
+
+    public static void show(String text, String variant, int durationMs) {
+        showInternal(text, variant, durationMs);
+    }
+
+    @JSBody(params = {"text", "variant", "duration"}, script =
+        "var alert = document.createElement('sl-alert');" +
+        "alert.variant = variant || 'primary';" +
+        "alert.closable = true;" +
+        "alert.innerHTML = text;" +
+        // Auto hide if duration > 0
+        "if (duration > 0) { setTimeout(function(){ if(alert.parentNode){ alert.hide && alert.hide(); alert.remove(); } }, duration); }" +
+        "document.body.appendChild(alert);" +
+        // Wait for definition then toast
+        "if (customElements.get('sl-alert')) { alert.toast(); } else { customElements.whenDefined('sl-alert').then(()=>alert.toast()); }")
+    private static native void showInternal(String text, String variant, int durationMs);
 }

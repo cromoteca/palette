@@ -83,7 +83,7 @@ npx cap run android
 Your TeaVM WebAssembly application should work perfectly on Android with:
 - UI components (TextField, Buttons, Notifications)
 - Local Java logic compiled to WASM
-- Vaadin web components
+- Standards-based web components (Shoelace)
 - Full client-side functionality
 
 The only limitation is server communication, which is expected in a mobile context without a backend.

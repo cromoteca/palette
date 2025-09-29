@@ -1,0 +1,76 @@
+:root {
+  /* Brand palette overrides (light mode) */
+  --sl-color-primary-50: #f0f7ff;
+  --sl-color-primary-100: #d9ecff;
+  --sl-color-primary-200: #b3dcff;
+  --sl-color-primary-300: #80c5ff;
+  --sl-color-primary-400: #47a9ff;
+  --sl-color-primary-500: #1d8fff; /* main */
+  --sl-color-primary-600: #0073e6;
+  --sl-color-primary-700: #005bb4;
+  --sl-color-primary-800: #004387;
+  --sl-color-primary-900: #002f5f;
+
+  --sl-focus-ring-color-primary: var(--sl-color-primary-600);
+  --sl-border-radius-medium: 8px;
+  --sl-border-radius-large: 14px;
+
+  /* Elevation tweaks */
+  --sl-shadow-x-large: 0 4px 22px -4px rgba(0,0,0,.18), 0 0 2px rgba(0,0,0,.08);
+}
+
+/* Dark theme overrides when class is present */
+.sl-theme-dark {
+  --sl-color-neutral-0: #101418;
+  --sl-color-neutral-50: #1b2228;
+  --sl-color-neutral-100: #252d34;
+  --sl-color-neutral-200: #303a42;
+  --sl-color-neutral-300: #3c4750;
+  --sl-color-neutral-400: #49555f;
+  --sl-color-neutral-500: #56626d;
+  --sl-color-neutral-600: #62707b;
+  --sl-color-neutral-700: #70808c;
+  --sl-color-neutral-800: #81929d;
+  --sl-color-neutral-900: #95a6b1;
+  --sl-color-primary-500: #4dabff;
+  --sl-color-primary-600: #2392f6;
+  --sl-focus-ring-color-primary: var(--sl-color-primary-600);
+}
+
+/* Buttons */
+sl-button::part(base) {
+  font-weight: 600;
+  letter-spacing: .25px;
+  text-transform: none;
+}
+
+/* Inputs */
+sl-input::part(base) {
+  font-size: 0.95rem;
+}
+
+/* Toast / alerts */
+sl-alert::part(base) {
+  border-radius: var(--sl-border-radius-large);
+  box-shadow: var(--sl-shadow-x-large);
+}
+
+/* Spacing utility container (if you append components programmatically) */
+body {
+  font-family: system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 1.75rem;
+  background: linear-gradient(145deg, #f8fbff, #eef5fb);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+.sl-theme-dark body, body.sl-theme-dark {
+  background: linear-gradient(145deg, #141a20, #1c252c);
+  color: #dce7ef;
+}
+
+/* Subtle animated focus ring example */
+:focus-visible {
+  outline: 2px solid var(--sl-focus-ring-color-primary);
+  outline-offset: 2px;
+  transition: outline-color .15s ease;
+}
