@@ -9,49 +9,34 @@ Before building for Android, make sure you have:
 2. **Java Development Kit (JDK)** (version 11 or newer)
 3. **Android SDK** configured in Android Studio
 
-## Building for Mobile
+## Quick Start (Android)
 
-### 1. Build the Project
 ```bash
-# From the project root
+# 1. Build server-side / WASM artifacts
 mvn clean package
 
-# This will:
-# - Compile your Java code
-# - Generate WASM files via TeaVM
-# - Build web assets with Vite
-```
-
-### 2. Update Mobile App
-```bash
-# From src/main/webapp directory
+# 2. Enter web app (first time: install deps)
 cd src/main/webapp
+npm install        # first time only
 
-# Copy web assets and sync with native project
+# 3. Build + copy web assets + sync native project
 npm run cap:build
 
-# Or manually:
-npx cap copy android
-npx cap sync android
-```
-
-### 3. Open in Android Studio
-```bash
-# From src/main/webapp directory
-npx cap open android
-
-# Or use the npm script:
+# 4. Open Android Studio (for emulator/device run & debug)
 npm run cap:android
+
+# (Alternative direct deploy without opening the IDE)
+# npm run cap:run:android
 ```
 
-### 4. Run on Device/Emulator
-```bash
-# From src/main/webapp directory
-npm run cap:run:android
+That is the 90% workflow. Re-run steps 1 (if Java/WASM changed) and 3 for each iteration.
 
-# Or manually:
-npx cap run android
-```
+## Detailed Steps (What Happens)
+
+1. `mvn clean package` – compiles Java, runs TeaVM, produces `target/generated/wasm/teavm/*` and Vite build output.
+2. `npm run cap:build` – runs Vite build (again, ensuring web assets reflect latest source), then copies assets into the native Android project and syncs Capacitor plugins.
+3. `npm run cap:android` – opens the Android project in Android Studio.
+4. `npm run cap:run:android` – builds & deploys directly to an attached device/emulator (skipping interactive IDE launch).
 
 ## Features
 
@@ -65,12 +50,12 @@ npx cap run android
 - ✅ WebAssembly compatibility maintained
 - ✅ Responsive viewport settings
 
-## Development Workflow
+## Iteration Workflow
 
-1. Make changes to your Java code
-2. Run `mvn package` to rebuild WASM
-3. Run `npm run cap:build` to update mobile app
-4. Test in Android Studio
+1. Edit Java / client code
+2. `mvn package` (needed only if Java → WASM changed)
+3. `npm run cap:build`
+4. Launch / rerun from Android Studio (hot swap some resources) or `npm run cap:run:android`
 
 ## Troubleshooting
 
@@ -87,3 +72,30 @@ Your TeaVM WebAssembly application should work perfectly on Android with:
 - Full client-side functionality
 
 The only limitation is server communication, which is expected in a mobile context without a backend.
+
+## Advanced / Manual Capacitor Commands (Optional)
+
+You rarely need these individually, but they help when troubleshooting or doing partial updates:
+
+```bash
+# Copy updated web assets only (after a manual front-end build)
+npx cap copy android
+
+# Copy + update native plugins (run after adding/removing a Capacitor plugin)
+npx cap sync android
+
+# Open Android project directly
+npx cap open android
+
+# Deploy/run without using the npm script wrapper
+npx cap run android
+```
+
+Prefer the npm scripts for consistency. Drop to these when isolating a failing step, skipping an unnecessary rebuild, or performing a plugin-only sync.
+
+## Notes on npm vs npx
+
+- Scripts (`npm run cap:*`) enforce a consistent sequence and are easier for teams.
+- `npx cap <cmd>` still uses the locally installed CLI (no global mismatch) and is fine for ad‑hoc use.
+- If in doubt, use the script variant first.
+
