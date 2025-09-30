@@ -1,5 +1,5 @@
 :root {
-  /* Brand palette overrides (light mode) */
+  /* Brand palette (light theme) */
   --sl-color-primary-50: #f0f7ff;
   --sl-color-primary-100: #d9ecff;
   --sl-color-primary-200: #b3dcff;
@@ -15,11 +15,11 @@
   --sl-border-radius-medium: 8px;
   --sl-border-radius-large: 14px;
 
-  /* Elevation tweaks */
+  /* Elevation */
   --sl-shadow-x-large: 0 4px 22px -4px rgba(0,0,0,.18), 0 0 2px rgba(0,0,0,.08);
 }
 
-/* Dark theme overrides when class is present */
+/* Dark theme tokens (applied when .sl-theme-dark is on <html> or <body>) */
 .sl-theme-dark {
   --sl-color-neutral-0: #101418;
   --sl-color-neutral-50: #1b2228;
@@ -37,58 +37,61 @@
   --sl-focus-ring-color-primary: var(--sl-color-primary-600);
 }
 
-/* Buttons */
+/* Button tweaks */
 sl-button::part(base) {
   font-weight: 600;
   letter-spacing: .25px;
   text-transform: none;
 }
 
-/* Inputs */
-sl-input::part(base) {
-  font-size: 0.95rem;
-}
+/* Input tweaks */
+sl-input::part(base) { font-size: 0.95rem; }
 
-/* Toast / alerts */
+/* Toast / alert surface */
 sl-alert::part(base) {
   border-radius: var(--sl-border-radius-large);
   box-shadow: var(--sl-shadow-x-large);
 }
 
-/* Spacing utility container (if you append components programmatically) */
+/* Page layout root */
 body {
   font-family: system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-  margin: 1.75rem;
+  margin: 0;
+  --app-vert-pad: 1.75rem;
+  padding: calc(env(safe-area-inset-top, 0px) + var(--app-vert-pad)) 1.75rem calc(env(safe-area-inset-bottom, 0px) + var(--app-vert-pad));
   background: linear-gradient(145deg, #f8fbff, #eef5fb);
+  box-sizing: border-box;
   min-height: 100vh;
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  /* Hide scrollbars while retaining scroll capability */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  overscroll-behavior: contain;
+}
+body::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
 }
 .sl-theme-dark body, body.sl-theme-dark {
   background: linear-gradient(145deg, #141a20, #1c252c);
   color: #dce7ef;
 }
-
-/* Subtle animated focus ring example */
+/* Accessible focus outline */
 :focus-visible {
   outline: 2px solid var(--sl-focus-ring-color-primary);
   outline-offset: 2px;
   transition: outline-color .15s ease;
 }
-
-/* Force Shoelace toast notifications to appear at bottom-right */
-/* Shoelace creates a stack container with class .sl-toast-stack and a
-   placement modifier class (e.g. --top-right). We override positioning so
-   whatever the default is, it ends up bottom-right. */
+/* Toast stack: bottom-right */
 .sl-toast-stack {
   top: auto !important;
   bottom: 1rem !important;
   right: 1rem !important;
   left: auto !important;
-  align-items: flex-end !important; /* ensure items align to right */
-  justify-content: flex-end; /* in case of column direction, push upward */
-  pointer-events: none; /* allow clicks through gaps; alerts themselves handle events */
+  align-items: flex-end !important;
+  justify-content: flex-end;
+  pointer-events: none;
 }
 
-.sl-toast-stack sl-alert::part(base) {
-  pointer-events: auto; /* restore interaction for the alert itself */
-}
+.sl-toast-stack sl-alert::part(base) { pointer-events: auto; }
