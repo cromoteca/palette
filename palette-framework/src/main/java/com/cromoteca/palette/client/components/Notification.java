@@ -22,9 +22,8 @@ public class Notification {
         "var alert = document.createElement('sl-alert');" +
         "alert.variant = variant || 'primary';" +
         "alert.closable = true;" +
+        "alert.duration = duration;" +
         "alert.innerHTML = text;" +
-        // Auto hide if duration > 0
-        "if (duration > 0) { setTimeout(function(){ if(alert.parentNode){ alert.hide && alert.hide(); alert.remove(); } }, duration); }" +
         "document.body.appendChild(alert);" +
         // Wait for definition then toast
         "if (customElements.get('sl-alert')) { alert.toast(); } else { customElements.whenDefined('sl-alert').then(()=>alert.toast()); }")
