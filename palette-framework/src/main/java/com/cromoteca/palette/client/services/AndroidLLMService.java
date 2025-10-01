@@ -1,6 +1,9 @@
 package com.cromoteca.palette.client.services;
 
 import org.teavm.jso.JSBody;
+import org.teavm.jso.JSFunctor;
+import org.teavm.jso.JSObject;
+import java.util.function.Consumer;
 
 /**
  * Android LLM implementation using MediaPipe via Capacitor plugin.
@@ -9,6 +12,8 @@ import org.teavm.jso.JSBody;
  * Note: Uses a global cache for async results since TeaVM/WASM doesn't support async/await.
  */
 public class AndroidLLMService implements LLMService {
+
+    private static int requestCounter = 0;
 
     @Override
     public String generate(String prompt) {
@@ -102,4 +107,78 @@ public class AndroidLLMService implements LLMService {
     @JSBody(params = {}, script =
         "return typeof AndroidLLM !== 'undefined';")
     private static native boolean checkAndroidLLMAvailable();
+
+    /**
+     * Generate streaming response with callback for updates.
+     * Polls the native bridge for updates.
+     */
+    public void generateStreaming(String prompt, Consumer<String> onUpdate, Runnable onComplete) {
+        String requestId = "req_" + (++requestCounter);
+
+        // Start streaming on Android
+        startStreamingGeneration(requestId, prompt);
+
+        // Poll for updates
+        pollStreamingUpdates(requestId, onUpdate, onComplete);
+    }
+
+    @JSBody(params = {"requestId", "prompt"}, script =
+        "if (typeof AndroidLLM === 'undefined') {" +
+        "  throw new Error('AndroidLLM bridge not available');" +
+        "}" +
+        "AndroidLLM.generateStreaming(requestId, prompt);")
+    private static native void startStreamingGeneration(String requestId, String prompt);
+
+    private void pollStreamingUpdates(String requestId, Consumer<String> onUpdate, Runnable onComplete) {
+        pollUpdate(requestId, onUpdate, onComplete);
+    }
+
+    @JSFunctor
+    private interface JsStringCallback extends JSObject {
+        void run(String value);
+    }
+
+    @JSFunctor
+    private interface JsVoidCallback extends JSObject {
+        void run();
+    }
+
+    private void pollUpdate(String requestId, Consumer<String> onUpdate, Runnable onComplete) {
+        // Use setInterval to poll (TeaVM/browser compatible)
+        JsStringCallback jsOnUpdate = onUpdate == null ? null : onUpdate::accept;
+        JsVoidCallback jsOnComplete = onComplete == null ? null : onComplete::run;
+        startPolling(requestId, jsOnUpdate, jsOnComplete);
+    }
+
+    @JSBody(params = {"requestId", "onUpdate", "onComplete"}, script =
+        "var lastText = '';" +
+        "console.log('Starting polling for request:', requestId);" +
+        "var intervalId = setInterval(function() {" +
+        "  if (typeof AndroidLLM === 'undefined') {" +
+        "    console.error('AndroidLLM not available');" +
+        "    clearInterval(intervalId);" +
+        "    return;" +
+        "  }" +
+        "  try {" +
+        "    var json = AndroidLLM.getStreamingUpdate(requestId);" +
+        "    console.log('Received update:', json);" +
+        "    var update = JSON.parse(json);" +
+        "    var currentText = update.text || '';" +
+        "    if (currentText !== lastText) {" +
+        "      console.log('Text changed, calling onUpdate');" +
+        "      lastText = currentText;" +
+        "      onUpdate(currentText);" +
+        "    }" +
+        "    if (update.done) {" +
+        "      console.log('Streaming complete');" +
+        "      clearInterval(intervalId);" +
+        "      AndroidLLM.clearStreamingState(requestId);" +
+        "      onComplete();" +
+        "    }" +
+        "  } catch(e) {" +
+        "    console.error('Polling error:', e);" +
+        "    clearInterval(intervalId);" +
+        "  }" +
+        "}, 100);")
+    private static native void startPolling(String requestId, JsStringCallback onUpdate, JsVoidCallback onComplete);
 }

@@ -9,6 +9,8 @@ import com.google.mediapipe.tasks.genai.llminference.LlmInference;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 /**
  * Wrapper for MediaPipe LLM inference.
@@ -23,6 +25,13 @@ public class LLMInference {
     private LlmInference llmInference;
     private boolean initialized = false;
     private Context context;
+
+    // Streaming state
+    private static class StreamingState {
+        String currentText = "";
+        boolean done = false;
+    }
+    private Map<String, StreamingState> streamingStates = new ConcurrentHashMap<>();
 
     public LLMInference(Context context) {
         this.context = context;
@@ -131,7 +140,7 @@ public class LLMInference {
     }
 
     /**
-     * Generate text from a prompt.
+     * Generate text from a prompt (synchronous).
      */
     public String generate(String prompt) {
         if (!initialized || llmInference == null) {
@@ -149,6 +158,94 @@ public class LLMInference {
             Log.e(TAG, "Generation failed: " + e.getMessage(), e);
             return "Error generating response: " + e.getMessage();
         }
+    }
+
+    /**
+     * Start streaming generation (async).
+     * Call getStreamingUpdate() to poll for updates.
+     *
+     * Note: For now using synchronous generation in background thread
+     * since MediaPipe streaming API seems unavailable in this version.
+     */
+    public void generateStreaming(String requestId, String prompt) {
+        if (!initialized || llmInference == null) {
+            StreamingState state = new StreamingState();
+            state.currentText = "⚠️ LLM model not initialized";
+            state.done = true;
+            streamingStates.put(requestId, state);
+            return;
+        }
+
+        Log.i(TAG, "Starting streaming generation for request: " + requestId);
+        StreamingState state = new StreamingState();
+        streamingStates.put(requestId, state);
+
+        // Generate in background thread and simulate streaming
+        new Thread(() -> {
+            try {
+                Log.i(TAG, "Generating response...");
+                String fullResponse = llmInference.generateResponse(prompt);
+
+                // Simulate streaming by sending chunks
+                String[] words = fullResponse.split(" ");
+                StringBuilder accumulated = new StringBuilder();
+
+                for (String word : words) {
+                    accumulated.append(word).append(" ");
+                    StreamingState s = streamingStates.get(requestId);
+                    if (s != null) {
+                        s.currentText = accumulated.toString();
+                        Log.d(TAG, "Chunk (" + requestId + "): " + s.currentText);
+                    }
+
+                    try {
+                        Thread.sleep(50); // Small delay between words
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
+
+                // Mark as done
+                StreamingState s = streamingStates.get(requestId);
+                if (s != null) {
+                    s.currentText = fullResponse; // Ensure we have the complete text
+                    s.done = true;
+                    Log.i(TAG, "Streaming complete for request: " + requestId);
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, "Streaming generation failed: " + e.getMessage(), e);
+                StreamingState s = streamingStates.get(requestId);
+                if (s != null) {
+                    s.currentText = "Error: " + e.getMessage();
+                    s.done = true;
+                    Log.e(TAG, "Streaming error for " + requestId + ": " + e.getMessage());
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Get current streaming state.
+     * Returns JSON: {"text": "...", "done": true/false}
+     */
+    public String getStreamingUpdate(String requestId) {
+        StreamingState state = streamingStates.get(requestId);
+        if (state == null) {
+            return "{\"text\":\"\",\"done\":false}";
+        }
+
+        // Escape quotes in text
+        String escapedText = state.currentText.replace("\"", "\\\"").replace("\n", "\\n");
+        return "{\"text\":\"" + escapedText + "\",\"done\":" + state.done + "}";
+    }
+
+    /**
+     * Clear streaming state for a request.
+     */
+    public void clearStreamingState(String requestId) {
+        streamingStates.remove(requestId);
+        Log.i(TAG, "Cleared streaming state for request: " + requestId);
     }
 
     /**

@@ -56,4 +56,51 @@ public class LLMBridge {
             return "MediaPipe (Not Loaded)";
         }
     }
+
+    /**
+     * Start streaming generation.
+     * @param requestId Unique ID for this request
+     * @param prompt The prompt to generate from
+     */
+    @JavascriptInterface
+    public void generateStreaming(String requestId, String prompt) {
+        if (llmInference == null) {
+            Log.w(TAG, "Cannot start streaming: LLM not initialized");
+            return;
+        }
+        try {
+            llmInference.generateStreaming(requestId, prompt);
+        } catch (Exception e) {
+            Log.e(TAG, "Streaming generation failed: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Get streaming update for a request.
+     * @param requestId The request ID
+     * @return JSON string: {"text": "...", "done": true/false}
+     */
+    @JavascriptInterface
+    public String getStreamingUpdate(String requestId) {
+        if (llmInference == null) {
+            return "{\"text\":\"❌ LLM not initialized\",\"done\":true}";
+        }
+        try {
+            return llmInference.getStreamingUpdate(requestId);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to get streaming update: " + e.getMessage(), e);
+            return "{\"text\":\"❌ Error: " + e.getMessage() + "\",\"done\":true}";
+        }
+    }
+
+    /**
+     * Clear streaming state for a request.
+     * @param requestId The request ID
+     */
+    @JavascriptInterface
+    public void clearStreamingState(String requestId) {
+        if (llmInference != null) {
+            llmInference.clearStreamingState(requestId);
+        }
+    }
 }
