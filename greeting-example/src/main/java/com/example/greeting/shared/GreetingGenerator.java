@@ -1,4 +1,4 @@
-package com.cromoteca.palette.shared;
+package com.example.greeting.shared;
 
 public class GreetingGenerator {
 

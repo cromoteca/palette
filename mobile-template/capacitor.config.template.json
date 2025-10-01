@@ -1,0 +1,8 @@
+{
+  "appId": "com.example.myapp",
+  "appName": "My Palette App",
+  "webDir": "../target/generated/wasm",
+  "server": {
+    "androidScheme": "https"
+  }
+}

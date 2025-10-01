@@ -1,12 +1,12 @@
-package com.cromoteca.palette.client.views;
+package com.example.greeting.client.views;
 
-import com.cromoteca.palette.shared.GreetingGenerator;
+import com.example.greeting.shared.GreetingGenerator;
 import com.cromoteca.palette.client.components.VerticalLayout;
 import com.cromoteca.palette.client.components.HorizontalLayout;
 import com.cromoteca.palette.client.components.TextField;
 import com.cromoteca.palette.client.components.Button;
 import com.cromoteca.palette.client.components.Notification;
-import com.cromoteca.palette.client.services.GreetingService;
+import com.example.greeting.client.services.GreetingService;
 
 public class MainView extends VerticalLayout {
 

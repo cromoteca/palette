@@ -1,44 +1,66 @@
-# TeaVM WebAssembly + Web Components (Shoelace)
+# Palette
 
-This project demonstrates wrapping standard Web Components (currently [Shoelace](https://shoelace.style/) button, input, alert) from Java using TeaVM compiled to WebAssembly. The goal is to show a serverless, component-oriented programming model fully client‑side.
+A Java UI framework for building web and mobile applications entirely in Java, without touching JavaScript.
+
+## What is this?
+
+Write UI code in Java → Compile to WebAssembly via TeaVM → Run in browsers and mobile apps.
+
+Uses Shoelace web components wrapped in type-safe Java APIs.
+
+## Project Structure
+
+Multi-module Maven project:
+
+- **`palette-framework/`** - Reusable UI framework (components, services)
+- **`greeting-example/`** - Demo application showing framework usage
+- **`mobile-template/`** - Templates for Capacitor mobile apps
 
 ## Quick Start
 
 ```bash
-# Build and start development server
-mvn clean package jetty:run
+./run.sh
 ```
 
-Then open browser to http://localhost:8080
+Visit http://localhost:8080
 
-## Mobile Deployment 📱
-
-This application can be deployed to Android devices using Capacitor! See [mobile-setup.md](mobile-setup.md) for detailed instructions.
-
-### Quick Mobile Build
+### Mobile (Android)
 ```bash
-# Build the project
+# Build WASM first
 mvn clean package
 
-# Sync with mobile app (from src/main/webapp)
-cd src/main/webapp
+cd greeting-example/mobile
+npm install
+
+# Open Android Studio
 npm run cap:android
+
+# Or run directly on device/emulator
+npm run cap:run:android
 ```
 
-### Features
-- ✅ Full UI functionality (Input, Buttons, Toast notifications via `sl-alert`)
-- ✅ Local Java logic compiled to WASM
-- ✅ Themeable design (light/dark auto, `theme.css` with CSS custom property overrides)
-- ✅ Mobile packaging via Capacitor
-- ❌ Server API calls (expected limitation)
+## Framework Components
 
-### Theming
-Shoelace ships with light and dark themes. We import the light theme plus a conditional dark theme in `shoelace-components.js`, and override design tokens in `theme.css` (e.g. `--sl-color-primary-500`, radii, shadows). You can quickly adjust brand colors by editing those variables.
+Java wrappers for Shoelace web components:
+- `Button`, `TextField`, `Notification`
+- `Layout`, `HorizontalLayout`, `VerticalLayout`
+- `HttpService` for network requests
 
-To force dark mode manually:
+Example usage in `greeting-example/src/main/java/com/example/greeting/client/views/MainView.java`
 
-```js
-document.documentElement.classList.add('sl-theme-dark');
-```
+## Tech Stack
 
-To add more components, import their modules in `shoelace-components.js` and create a Java wrapper extending `Component` with the appropriate tag name.
+- **Java 11+** with TeaVM (Java → WebAssembly compiler)
+- **Shoelace** web components
+- **Vite** for frontend bundling
+- **Capacitor** for mobile deployment
+- **Maven** for builds
+
+## Package Structure
+
+- Framework: `com.cromoteca.palette.*`
+- Example apps: `com.example.<appname>.*`
+
+## Status
+
+⚠️ **Prototype/Experimental** - Breaking changes expected. Focus on rapid iteration, not production stability.

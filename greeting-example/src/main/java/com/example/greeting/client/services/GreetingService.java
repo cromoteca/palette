@@ -1,4 +1,6 @@
-package com.cromoteca.palette.client.services;
+package com.example.greeting.client.services;
+
+import com.cromoteca.palette.client.services.HttpService;
 
 public class GreetingService {
 
@@ -6,7 +8,7 @@ public class GreetingService {
         var url = "/api/greeting?name=" + encodeURIComponent(name);
         return HttpService.get(url);
     }
-    
+
     private String encodeURIComponent(String str) {
         if (str == null) return "";
         // Simple URL encoding for basic characters

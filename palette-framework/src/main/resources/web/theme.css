@@ -1,0 +1,97 @@
+:root {
+  /* Brand palette (light theme) */
+  --sl-color-primary-50: #f0f7ff;
+  --sl-color-primary-100: #d9ecff;
+  --sl-color-primary-200: #b3dcff;
+  --sl-color-primary-300: #80c5ff;
+  --sl-color-primary-400: #47a9ff;
+  --sl-color-primary-500: #1d8fff; /* main */
+  --sl-color-primary-600: #0073e6;
+  --sl-color-primary-700: #005bb4;
+  --sl-color-primary-800: #004387;
+  --sl-color-primary-900: #002f5f;
+
+  --sl-focus-ring-color-primary: var(--sl-color-primary-600);
+  --sl-border-radius-medium: 8px;
+  --sl-border-radius-large: 14px;
+
+  /* Elevation */
+  --sl-shadow-x-large: 0 4px 22px -4px rgba(0,0,0,.18), 0 0 2px rgba(0,0,0,.08);
+}
+
+/* Dark theme tokens (applied when .sl-theme-dark is on <html> or <body>) */
+.sl-theme-dark {
+  --sl-color-neutral-0: #101418;
+  --sl-color-neutral-50: #1b2228;
+  --sl-color-neutral-100: #252d34;
+  --sl-color-neutral-200: #303a42;
+  --sl-color-neutral-300: #3c4750;
+  --sl-color-neutral-400: #49555f;
+  --sl-color-neutral-500: #56626d;
+  --sl-color-neutral-600: #62707b;
+  --sl-color-neutral-700: #70808c;
+  --sl-color-neutral-800: #81929d;
+  --sl-color-neutral-900: #95a6b1;
+  --sl-color-primary-500: #4dabff;
+  --sl-color-primary-600: #2392f6;
+  --sl-focus-ring-color-primary: var(--sl-color-primary-600);
+}
+
+/* Button tweaks */
+sl-button::part(base) {
+  font-weight: 600;
+  letter-spacing: .25px;
+  text-transform: none;
+}
+
+/* Input tweaks */
+sl-input::part(base) { font-size: 0.95rem; }
+
+/* Toast / alert surface */
+sl-alert::part(base) {
+  border-radius: var(--sl-border-radius-large);
+  box-shadow: var(--sl-shadow-x-large);
+}
+
+/* Page layout root */
+body {
+  font-family: system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  --app-vert-pad: 1.75rem;
+  padding: calc(env(safe-area-inset-top, 0px) + var(--app-vert-pad)) 1.75rem calc(env(safe-area-inset-bottom, 0px) + var(--app-vert-pad));
+  background: linear-gradient(145deg, #f8fbff, #eef5fb);
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  /* Hide scrollbars while retaining scroll capability */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  overscroll-behavior: contain;
+}
+body::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
+.sl-theme-dark body, body.sl-theme-dark {
+  background: linear-gradient(145deg, #141a20, #1c252c);
+  color: #dce7ef;
+}
+/* Accessible focus outline */
+:focus-visible {
+  outline: 2px solid var(--sl-focus-ring-color-primary);
+  outline-offset: 2px;
+  transition: outline-color .15s ease;
+}
+/* Toast stack: bottom-right */
+.sl-toast-stack {
+  top: auto !important;
+  bottom: 1rem !important;
+  right: 1rem !important;
+  left: auto !important;
+  align-items: flex-end !important;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.sl-toast-stack sl-alert::part(base) { pointer-events: auto; }

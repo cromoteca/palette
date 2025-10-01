@@ -1,0 +1,8 @@
+{
+  "appId": "com.example.greeting",
+  "appName": "Greeting Example",
+  "webDir": "../target/generated/wasm",
+  "server": {
+    "androidScheme": "https"
+  }
+}
