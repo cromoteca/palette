@@ -45,6 +45,7 @@ Java wrappers for Shoelace web components:
 - `Button`, `TextField`, `Notification`
 - `Layout`, `HorizontalLayout`, `VerticalLayout`
 - `HttpService` for network requests
+- `LLMService` for on-device AI inference (Android: MediaPipe Gemma 3, Browser: Mock)
 
 Example usage in `greeting-example/src/main/java/com/example/greeting/client/views/MainView.java`
 
